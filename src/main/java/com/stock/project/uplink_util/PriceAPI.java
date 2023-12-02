@@ -23,7 +23,6 @@ public class PriceAPI {
         String apiVersion = "2.0"; // String | API Version Header
         try {
             GetMarketQuoteLastTradedPriceResponse result = apiInstance.ltp(symbol, apiVersion);
-            System.out.println(result);
             return result;
         } catch (ApiException e) {
             System.err.println("Exception when calling MarketQuoteApi#ltp "+e.getResponseBody());

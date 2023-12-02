@@ -1,8 +1,8 @@
 package com.stock.project.trade;
 
+import com.stock.project.constants.Stock;
 import com.stock.project.constants.StockTradeActions;
-import com.stock.project.stock.Stock;
-import com.stock.project.transaction.Transaction;
+import com.stock.project.user.User;
 import jakarta.persistence.*;
 
 @Entity
@@ -19,12 +19,15 @@ public class Trade {
             generator = "trade_sequence"
     )
     private Long tradeId;
-    @ManyToOne
-    @JoinColumn(name = "stockId")
     private Stock stock;
-    @OneToOne
-    private Transaction transaction;
+    private Integer units;
     private StockTradeActions tradeAction;
+    @ManyToOne
+    private User user;
+
+    public Trade() {
+
+    }
 
     public Long getTradeId() {
         return tradeId;
@@ -42,19 +45,34 @@ public class Trade {
         this.stock = stock;
     }
 
-    public Transaction getTransaction() {
-        return transaction;
-    }
-
-    public void setTransaction(Transaction transaction) {
-        this.transaction = transaction;
-    }
-
     public StockTradeActions getTradeAction() {
         return tradeAction;
     }
 
     public void setTradeAction(StockTradeActions tradeAction) {
         this.tradeAction = tradeAction;
+    }
+
+    public Integer getUnits() {
+        return units;
+    }
+
+    public void setUnits(Integer units) {
+        this.units = units;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Trade(Stock stock, StockTradeActions tradeAction, Integer units, User user) {
+        this.stock = stock;
+        this.tradeAction = tradeAction;
+        this.units = units;
+        this.user = user;
     }
 }

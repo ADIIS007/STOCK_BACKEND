@@ -1,6 +1,7 @@
 package com.stock.project.transaction;
 
-import com.stock.project.auth.User;
+import com.stock.project.constants.Payment;
+import com.stock.project.user.User;
 import com.stock.project.constants.TransactionType;
 import com.stock.project.trade.Trade;
 import jakarta.persistence.*;
@@ -19,13 +20,22 @@ public class Transaction {
             generator = "trade_sequence"
     )
     private Long transactionId;
-    @OneToOne(targetEntity = Trade.class,cascade = CascadeType.ALL)
+    @OneToOne(targetEntity = Trade.class, cascade = CascadeType.ALL)
     private Trade trade;
-    @ManyToOne(targetEntity = User.class,cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL)
+    @Column(nullable = false)
     private User user;
+    @Column(nullable = false)
     private Long quantity;
-    private Long unitCost;
+    @Column(nullable = false)
+    private Double unitCost;
+    @Column(nullable = false)
     private TransactionType type;
+    @Column(nullable = false)
+    private Payment flow;
+
+    public Transaction() {
+    }
 
     public Long getTransactionId() {
         return transactionId;
@@ -59,11 +69,11 @@ public class Transaction {
         this.quantity = quantity;
     }
 
-    public Long getUnitCost() {
+    public Double getUnitCost() {
         return unitCost;
     }
 
-    public void setUnitCost(Long unitCost) {
+    public void setUnitCost(Double unitCost) {
         this.unitCost = unitCost;
     }
 
@@ -73,5 +83,22 @@ public class Transaction {
 
     public void setType(TransactionType type) {
         this.type = type;
+    }
+
+    public Payment getFlow() {
+        return flow;
+    }
+
+    public void setFlow(Payment flow) {
+        this.flow = flow;
+    }
+
+    public Transaction(Trade trade, User user, Long quantity, Double unitCost, TransactionType type, Payment flow) {
+        this.trade = trade;
+        this.user = user;
+        this.quantity = quantity;
+        this.unitCost = unitCost;
+        this.type = type;
+        this.flow = flow;
     }
 }
